@@ -1,0 +1,913 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2013 rel. 2 sp2 (x64) (http://www.altova.com) by AMADEUS s.a.s. (AMADEUS s.a.s.) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://xml.amadeus.com/2010/06/REV_v1" xmlns:iata_ct="http://www.iata.org/IATA/2007/00"
+targetNamespace="http://xml.amadeus.com/2010/06/REV_v1" elementFormDefault="qualified" version="3.7.2">
+    <xs:import namespace="http://www.iata.org/IATA/2007/00" schemaLocation="../iata_ct/IATA_CommonTypes.xsd" />
+    <xs:simpleType name="XsdVersion">
+        <xs:annotation>
+            <xs:documentation>Used to indicate the version of the XSD schema linked to the generated XML data (length 3)</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d+\.\d+\.\d+" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AlphaLength2">
+        <xs:annotation>
+            <xs:documentation>Used for an Alpha String, length 2</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-zA-Z]{2}" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AlphaNumericStringLength2">
+        <xs:annotation>
+            <xs:documentation>Used for Alpha-Numeric Strings, length 2</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9a-zA-Z]{2}" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AlphaNumericStringLength3">
+        <xs:annotation>
+            <xs:documentation>Used for Alpha-Numeric Strings, length 3</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9a-zA-Z]{3}" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="StringLength1to3">
+        <xs:annotation>
+            <xs:documentation>Used for strings, length 1 to 3</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1" />
+            <xs:maxLength value="3" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="StringLength1to9">
+        <xs:annotation>
+            <xs:documentation>Used for strings, length 1 to 9</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1" />
+            <xs:maxLength value="9" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="StringLength1to20">
+        <xs:annotation>
+            <xs:documentation>Used for strings, length 1 to 20</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1" />
+            <xs:maxLength value="20" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="StringLength1to25">
+        <xs:annotation>
+            <xs:documentation>Used for strings, length 1 to 25</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1" />
+            <xs:maxLength value="25" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="StringLength1to55">
+        <xs:annotation>
+            <xs:documentation>Used for strings, length 1 to 55</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1" />
+            <xs:maxLength value="55" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="StringLength0to300">
+        <xs:annotation>
+            <xs:documentation>Used for strings, length 0 to 300</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="300" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="StringLength0to999">
+        <xs:annotation>
+            <xs:documentation>Used for strings, length 0 to 999</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="999" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NumericStringLength1to12">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Used for Numeric Strings, length 1 to 12.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{1,12}" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Numeric0to9">
+        <xs:annotation>
+            <xs:documentation>Used for Numeric values, from 0 to 9 inclusive</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:integer">
+            <xs:maxInclusive value="9" />
+            <xs:minInclusive value="0" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Numeric0to999999999999999">
+        <xs:annotation>
+            <xs:documentation>Used for Numeric values, from 0 to 999999999999999 inclusive</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:integer">
+            <xs:maxInclusive value="999999999999999" />
+            <xs:minInclusive value="0" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Numeric0to99999999">
+        <xs:annotation>
+            <xs:documentation>Used for Numeric values, from 0 to 99999999 inclusive</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0" />
+            <xs:maxInclusive value="99999999" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="EntityStatus">
+        <xs:annotation>
+            <xs:documentation>Used to store a status of a financial entity. Possible values: VALID, DEGRADED, INCOMPLETE, NOT
+            CONFIRMED</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="VALID" />
+            <xs:enumeration value="DEGRADED" />
+            <xs:enumeration value="INCOMPLETE" />
+            <xs:enumeration value="NOT CONFIRMED" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Rate">
+        <xs:annotation>
+            <xs:documentation>Used for rates, max 3 decimals</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:decimal">
+            <xs:fractionDigits value="3" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:attributeGroup name="OriginDestinationGroup_REV">
+        <xs:annotation>
+            <xs:documentation>Used to specify the origin and destination airport and city codes.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="OriginCityCode" type="xs:string" use="optional">
+            <xs:annotation>
+                <xs:documentation>Used to specify the origin city code.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="DestinationCityCode" type="xs:string" use="optional">
+            <xs:annotation>
+                <xs:documentation>Used to specify the destination city code.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OriginAirportCode" type="xs:string" use="optional">
+            <xs:annotation>
+                <xs:documentation>Used to specify the origin airport code.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="DestinationAirportCode" type="xs:string" use="optional">
+            <xs:annotation>
+                <xs:documentation>Used to specify the destination airport code.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="CurrencyAmountGroup_REV">
+        <xs:annotation>
+            <xs:documentation>Provides a monetary amount and the currency code to reflect the currency in which this amount is
+            expressed.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="Amount" type="xs:decimal" use="optional">
+            <xs:annotation>
+                <xs:documentation>The monetary value.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attributeGroup ref="CurrencyCodeGroup_REV">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">Provides a currency code to reflect the currency in which an amount may be expressed as well as the
+                number of decimal places of that currency.</xs:documentation>
+            </xs:annotation>
+        </xs:attributeGroup>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="CurrencyCodeGroup_REV">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Provides a currency code to reflect the currency in which an amount may be expressed.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="CurrencyCode" type="xs:string" use="optional">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">The code specifying a monetary unit. Use ISO 4217, three alpha code.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="DecimalPlaces" type="xs:nonNegativeInteger" use="optional">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">Indicates the number of decimal places for a particular currency. This is equivalent to the ISO 4217
+                standard "minor unit". Typically used when the amount provided includes the minor unit of currency without a decimal point (e.g., USD
+                8500 needs DecimalPlaces="2" to represent $85).</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:complexType name="BillingPeriod_REV">
+        <xs:annotation>
+            <xs:documentation>Used for a period of billing in format WWMMYY where WW is the Week Number (from 01 to 04)</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="Week">
+            <xs:annotation>
+                <xs:documentation>Identify the week of the month. Possible values: 01, 02, 03, 04</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string" />
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="Month">
+            <xs:annotation>
+                <xs:documentation>Identify the month. Format MM</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string" />
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="Year">
+            <xs:annotation>
+                <xs:documentation>Identify the year. Format YY</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string" />
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="AccountableEntity_REV">
+        <xs:annotation>
+            <xs:documentation>Used to carry a collection of amounts referring to the same monetary entity</xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="0">
+            <xs:element name="Amount" type="Amount_REV" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="UATP_REV">
+        <xs:annotation>
+            <xs:documentation>Used for a VAT</xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="0">
+            <xs:element name="AccountableEntity" type="AccountableEntity_REV" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="VAT_REV">
+        <xs:annotation>
+            <xs:documentation>Used for a VAT</xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="0">
+            <xs:element name="AccountableEntity" type="AccountableEntity_REV" minOccurs="0" />
+        </xs:sequence>
+        <xs:attribute name="VATIdentifier" type="xs:string" use="optional" />
+        <xs:attribute name="PayableBy" type="xs:string" />
+        <xs:attribute name="Label" type="xs:string" />
+        <xs:attribute name="Text" type="xs:string" />
+        <xs:attribute name="BaseAmount" type="xs:decimal" />
+        <xs:attribute name="Rate" type="Rate" />
+    </xs:complexType>
+    <xs:complexType name="Fare_REV">
+        <xs:annotation>
+            <xs:documentation>Used for a fare</xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="0">
+            <xs:element name="AccountableEntity" type="AccountableEntity_REV" minOccurs="0" />
+        </xs:sequence>
+        <xs:attribute name="FareDescription" type="xs:string" />
+    </xs:complexType>
+    <xs:complexType name="Fee_REV">
+        <xs:annotation>
+            <xs:documentation>Used for a fee</xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="0">
+            <xs:element name="AccountableEntity" type="AccountableEntity_REV" minOccurs="0" />
+        </xs:sequence>
+        <xs:attribute name="Code" type="xs:string" />
+        <xs:attribute name="SubCode" type="xs:string" />
+        <xs:attribute name="SubType" type="xs:string" />
+    </xs:complexType>
+    <xs:complexType name="Tax_REV">
+        <xs:annotation>
+            <xs:documentation>Used for a tax</xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="0">
+            <xs:element name="AccountableEntity" type="AccountableEntity_REV" minOccurs="0" />
+        </xs:sequence>
+        <xs:attribute name="NatureCode" type="xs:string" use="optional" />
+        <xs:attribute name="ISOCode" type="xs:string" />
+        <xs:attribute name="Description" type="xs:string" use="optional" />
+        <xs:attribute name="TaxType" type="xs:string" use="optional" />
+        <xs:attribute name="TaxFormat" type="xs:string" use="optional" />
+        <xs:attribute name="TaxDestination" type="xs:string" use="optional" />
+        <xs:attribute name="IsClaimBack" type="xs:string" use="optional" />
+        <xs:attribute name="PointOfApplicationCode" type="xs:string" use="optional" />
+        <xs:attribute name="PointOfApplicationIndicator" type="xs:string" use="optional" />
+        <xs:attribute name="TaxRecipientCategory" type="xs:string" use="optional" />
+        <xs:attribute name="TaxRecipientId" type="xs:string" use="optional" />
+        <xs:attribute name="TaxRemittanceIdentifier" type="xs:string" use="optional" />
+        <xs:attribute name="SequenceQualifier" type="xs:string" use="optional" />
+        <xs:attribute name="SequenceNumber" type="xs:integer" use="optional" />
+        <xs:attribute name="IsInterlineable" type="xs:string" use="optional" />
+        <xs:attribute name="IsRefundable" type="xs:string" use="optional" />
+        <xs:attribute name="AppliedMethod" type="xs:string" />
+        <xs:attribute name="InvoluntaryExchangeMethod" type="xs:string" />
+        <xs:attribute name="RelevantDate" type="xs:string" />
+        <xs:attribute name="SectorApplication" type="xs:string" />
+        <xs:attribute name="IsAlwaysRemitted" type="xs:string" />
+        <xs:attribute name="UpdateAtFlown" type="xs:string" />
+        <xs:attribute name="UsedByExchange" type="xs:string" />
+        <xs:attribute name="PercentageValue" type="xs:decimal" />
+		<xs:attribute name="IsClaimOnlyRefundedAmount" type="xs:string" use="optional" />
+		<xs:attribute name="ForcedFilingCurrency" type="xs:string" use="optional" />
+		<xs:attribute name="IncludedTaxSPA" type="xs:string" use="optional" />
+		<xs:attribute name="OverrideTaxSPA" type="xs:string" use="optional" />
+    </xs:complexType>
+    <xs:complexType name="ServiceCharge_REV">
+        <xs:annotation>
+            <xs:documentation>Used for a service charge (e.g. ISC)</xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="0">
+            <xs:element name="AccountableEntity" type="AccountableEntity_REV" minOccurs="0" />
+        </xs:sequence>
+        <xs:attribute name="Percentage" type="xs:decimal" use="optional" />
+    </xs:complexType>
+    <xs:complexType name="Commission_REV">
+        <xs:annotation>
+            <xs:documentation>Used for a commission</xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="0">
+            <xs:element name="AccountableEntity" type="AccountableEntity_REV" minOccurs="0" />
+        </xs:sequence>
+        <xs:attribute name="Percentage" type="xs:decimal" use="optional" />
+        <xs:attribute name="CommissionType" type="xs:string" use="optional" />
+        <xs:attribute name="ProrationMethod" type="xs:string" use="optional" />
+        <xs:attribute name="ShareIndicator" type="xs:string" use="optional" />
+        <xs:attribute name="SellingAgencyIATANumber" type="xs:string" use="optional" />
+        <xs:attribute name="BacchusDealNumber" type="xs:string" use="optional" />
+        <xs:attribute name="ControlAdjustmentIndicator" type="xs:string" use="optional" />
+    </xs:complexType>
+    <xs:complexType name="Amount_REV">
+        <xs:annotation>
+            <xs:documentation>Used to carry a same amount converted in different currencies</xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="0">
+            <xs:element name="AmountType" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="Amount" minOccurs="0">
+                <xs:complexType>
+                    <xs:attributeGroup ref="CurrencyAmountGroup_REV" />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ConversionDate" type="xs:dateTime" minOccurs="0" />
+            <xs:element name="ConversionRule" type="xs:string" minOccurs="0" />
+            <xs:element name="OriginalCurrency" type="xs:string" minOccurs="0" />
+            <xs:element name="ROE" type="xs:double" minOccurs="0" />
+            <xs:element name="Difference" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="Amount" minOccurs="0">
+                            <xs:complexType>
+                                <xs:attributeGroup ref="CurrencyAmountGroup_REV" />
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="DifferenceStatus" type="xs:string" />
+                    <xs:attribute name="DifferenceType" type="xs:string" use="optional" />
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CouponAmounts_REV">
+        <xs:annotation>
+            <xs:documentation>Container for the different amount types at coupon level</xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="0">
+            <xs:element name="CouponProratedFare" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="AccountableEntity" type="AccountableEntity_REV" minOccurs="0" />
+                    </xs:sequence>
+                    <xs:attribute name="ProrationSource" type="xs:string" />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="CouponTaxes" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="CollectedTaxesCpnLvl" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence minOccurs="0">
+                                    <xs:element name="Tax" type="Tax_REV" minOccurs="0" maxOccurs="unbounded" />
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="RemittanceTaxesCpnLvl" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence minOccurs="0">
+                                    <xs:element name="RemittanceTaxCpnLvl" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                            <xs:sequence minOccurs="0">
+                                                <xs:element name="Tax" type="Tax_REV" minOccurs="0" />
+                                                <xs:element name="AirlineTaxSPA" type="AirlineTaxSPA_REV" minOccurs="0" maxOccurs="unbounded" />
+                                                <xs:element name="RemittanceTaxCalculatedValues" minOccurs="0" maxOccurs="unbounded">
+                                                    <xs:complexType>
+                                                        <xs:sequence minOccurs="0">
+                                                            <xs:element name="AccountableEntity" type="AccountableEntity_REV" minOccurs="0" />
+                                                            <xs:element name="TaxJustification" type="TaxJustification_REV" minOccurs="0" maxOccurs="unbounded" />
+                                                        </xs:sequence>
+                                                        <xs:attribute name="CalculationSource" type="xs:string" />
+                                                    </xs:complexType>
+                                                </xs:element>
+                                                <xs:element name="TaxHandlingFee" minOccurs="0">
+                                                    <xs:complexType>
+                                                        <xs:sequence minOccurs="0">
+                                                            <xs:element name="AccountableEntity" type="AccountableEntity_REV" minOccurs="0" />
+                                                        </xs:sequence>
+                                                    </xs:complexType>
+                                                </xs:element>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="InterlineableTaxes" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence minOccurs="0">
+                                    <xs:element name="Tax" type="Tax_REV" minOccurs="0" maxOccurs="unbounded" />
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="CouponFees" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="Fee" type="Fee_REV" minOccurs="0" maxOccurs="unbounded" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="CouponSurcharges" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="Surcharge" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:sequence minOccurs="0">
+                                    <xs:element name="AccountableEntity" type="AccountableEntity_REV" minOccurs="0" />
+                                </xs:sequence>
+                                <xs:attribute name="SurchargeCode" type="xs:string" />
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="CouponStandardCommission" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="Commission" type="Commission_REV" minOccurs="0" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="CouponSuppCommission" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="Commission" type="Commission_REV" minOccurs="0" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+			<xs:element name="CreditCardCommission" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="AccountableEntity" type="AccountableEntity_REV" minOccurs="0" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ISC" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="ISC" type="ServiceCharge_REV" minOccurs="0" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="OtherCommission" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="Commission" type="Commission_REV" minOccurs="0" maxOccurs="unbounded" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="UATP" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="UATP" type="UATP_REV" minOccurs="0" maxOccurs="unbounded" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="CouponVAT" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="VAT" type="VAT_REV" minOccurs="0" maxOccurs="unbounded" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="HandlingFee" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="AccountableEntity" type="AccountableEntity_REV" minOccurs="0" />
+                    </xs:sequence>
+                    <xs:attribute name="HandlingFeeType" type="xs:string" />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="FranchiseeDirectSalesCommission" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="AccountableEntity" type="AccountableEntity_REV" minOccurs="0" />
+                    </xs:sequence>
+                    <xs:attribute name="Percentage" type="xs:decimal" use="optional" />
+                    <xs:attribute name="PayableFranchisee" type="xs:string" />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="CouponCommission" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="Commission" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:sequence minOccurs="0">
+                                    <xs:element name="AccountableEntity" type="AccountableEntity_REV" minOccurs="0" />
+                                    <xs:element name="CommissionRuleContext" minOccurs="0">
+                                        <xs:complexType>
+                                            <xs:sequence minOccurs="0">
+                                                <xs:element name="TaxesAndFees" minOccurs="0" maxOccurs="unbounded">
+                                                    <xs:complexType>
+                                                        <xs:attribute name="Code" type="xs:string" />
+                                                    </xs:complexType>
+                                                </xs:element>
+                                            </xs:sequence>
+                                            <xs:attribute name="POSName" type="xs:string" />
+                                            <xs:attribute name="AmountNettingLevel" type="xs:string" />
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+                                <xs:attribute name="Percentage" type="xs:decimal" use="optional" />
+                                <xs:attribute name="CommissionType" type="xs:string" />
+                                <xs:attribute name="PayableAgency" type="xs:string" />
+                                <xs:attribute name="PayableAirline" type="xs:string" />
+                                <xs:attribute name="BillingStatus" type="xs:string" />
+                                <xs:attribute name="BillingDate" type="xs:date" />
+								<xs:attribute name="GSACode" type="xs:string" />
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="InterlineCorrespondence" type="InterlineCorrespondence_REV" minOccurs="0" />
+            <xs:element name="InterlineNetAmount" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="AccountableEntity" type="AccountableEntity_REV" minOccurs="0" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+	<xs:complexType name="InterlineCorrespondence_REV">
+		<xs:sequence minOccurs="0">
+            <xs:element name="AccountableEntity" type="AccountableEntity_REV" minOccurs="0" />
+        </xs:sequence>
+        <xs:attribute name="CorrespondenceNumber" type="xs:string" />
+		<xs:attribute name="CorrespondenceStatus" type="xs:integer" use="optional" />
+    </xs:complexType>
+    <xs:complexType name="IssuerInformation_REV">
+        <xs:attribute name="CityPOS" type="xs:string" />
+        <xs:attribute name="IssuerSystem" type="xs:string" />
+        <xs:attribute name="Channel" type="xs:string" />
+        <xs:attribute name="Iata" type="xs:string" />
+        <xs:attribute name="OfficeId" type="xs:string" use="optional" />
+        <xs:attribute name="CountryCodeOfIssue" type="xs:string" use="optional" />
+        <xs:attribute name="SASI" type="xs:string" use="optional" />
+        <xs:attribute name="AgentSign" type="xs:string" />
+        <xs:attribute name="NDCAirlineIssuingAgent" type="xs:string" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="FOP_REV">
+        <xs:sequence minOccurs="0">
+            <xs:element name="FOP" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="AccountableEntity" type="AccountableEntity_REV" minOccurs="0" />
+                        <xs:element name="CCDetails" minOccurs="0">
+                            <xs:complexType>
+                                <xs:attribute name="CardExpiryDate" type="xs:string" use="optional" />
+                                <xs:attribute name="CardNumber" type="xs:string" use="optional" />
+                                <xs:attribute name="MaskedCardNumber" type="xs:string" use="optional" />
+                                <xs:attribute name="ApprovalCode" type="xs:string" use="optional" />
+                                <xs:attribute name="BINRange" type="xs:string" use="optional" />
+                                <xs:attribute name="CVVR" type="xs:string" />
+                                <xs:attribute name="VendorCode" type="xs:string" />
+                                <xs:attribute name="SwipeIndicator" type="xs:string" />
+                                <xs:attribute name="InvoiceNumber" type="xs:string" />
+                                <xs:attribute name="InvoiceDate" type="xs:date" />
+								<xs:attribute name="RedemptionApprovalCode" type="xs:string" use="optional" />
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="SecurePayment" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:attribute name="CardAuthenticationSequenceNumber" type="xs:integer" use="optional" />
+                                <xs:attribute name="SecureCardAuthenticationInformation" type="xs:string" use="optional" />
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="CardAuthenticationInformation" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:attribute name="CardAuthenticationSequenceNumber" type="xs:integer" use="optional" />
+                                <xs:attribute name="CardAuthenticationInformation" type="xs:string" use="optional" />
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="SignedForAmount" type="AccountableEntity_REV" minOccurs="0" />
+                        <xs:element name="AcquisitionInformation" minOccurs="0">
+                            <xs:complexType>
+                                <xs:attribute name="AcquisitionDate" type="xs:date" />
+                                <xs:attribute name="AcquisitionEnvelopeNumber" type="xs:integer" />
+                                <xs:attribute name="ConfirmationDate" type="xs:date" />
+                                <xs:attribute name="ConfirmationFilename" type="xs:string" />
+                                <xs:attribute name="SettlementDate" type="xs:date" />
+                                <xs:attribute name="SettlementFilename" type="xs:string" />
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="RefundedCashFOPInfo" minOccurs="0">
+                            <xs:complexType>
+                                <xs:attribute name="PayeeName" type="xs:string" />
+                                <xs:attribute name="RefundedBy" type="xs:string" />
+                                <xs:attribute name="AddressLine1" type="xs:string" />
+                                <xs:attribute name="AddressLine2" type="xs:string" />
+                                <xs:attribute name="AddressLine3" type="xs:string" />
+                                <xs:attribute name="City" type="xs:string" />
+                                <xs:attribute name="State" type="xs:string" />
+                                <xs:attribute name="PostCode" type="xs:string" />
+                                <xs:attribute name="Country" type="xs:string" />
+                                <xs:attribute name="BankName" type="xs:string" />
+                                <xs:attribute name="BankAddressLine1" type="xs:string" />
+                                <xs:attribute name="BankAddressLine2" type="xs:string" />
+                                <xs:attribute name="BankCountry" type="xs:string" />
+                                <xs:attribute name="BankAccountNumber" type="xs:string" />
+                                <xs:attribute name="LocalBankCode" type="xs:string" />
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="MerchantRefNbr" type="xs:string" use="optional" />
+                    <xs:attribute name="ECommerceIndicator" type="xs:string" use="optional" />
+                    <xs:attribute name="Type" type="xs:string" use="optional" />
+                    <xs:attribute name="Code" type="xs:string" use="optional" />
+                    <xs:attribute name="BillingStatus" type="xs:string" use="optional" />
+                    <xs:attribute name="DealNumber" type="xs:string" use="optional" />
+                    <xs:attribute name="CollectingAgencyIATANumber" type="xs:string" />
+                    <xs:attribute name="AccountFreeFlow" type="xs:string" />
+                    <xs:attribute name="AccountFreeFlowSwitch" type="xs:string" />
+                    <xs:attribute name="PaymentNumber" type="xs:string" />
+                    <xs:attribute name="TicketedType" type="xs:string" use="optional" />
+                    <xs:attribute name="CompleteFOP" type="xs:string" use="optional" />
+                    <xs:attribute name="FPTI" type="xs:string" />
+                    <xs:attribute name="EXPC" type="xs:string" />
+					<xs:attribute name="PNRCompleteFOP" type="xs:string" use="optional" />
+					<xs:attribute name="DebtorCode" type="xs:string" use="optional" />
+					<xs:attribute name="FOPNumber" type="xs:string" use="optional" />
+					<xs:attribute name="ObjectCode" type="xs:string" use="optional" />
+					<xs:attribute name="GLAccountNumber" type="xs:string" use="optional" />
+					<xs:attribute name="CostCenter" type="xs:string" use="optional" />
+					<xs:attribute name="VoucherId" type="xs:string" use="optional" />
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Totals_REV">
+        <xs:sequence minOccurs="0">
+            <xs:element name="GrossValueAmount" type="xs:decimal" minOccurs="0" />
+            <xs:element name="TotRemittanceAmount" type="xs:decimal" minOccurs="0" />
+            <xs:element name="TotCommissionValueAmount" type="xs:decimal" minOccurs="0" />
+            <xs:element name="TotTaxMiscFeeAmount" type="xs:decimal" minOccurs="0" />
+            <xs:element name="TotLateReportingPenalty" type="xs:decimal" minOccurs="0" />
+            <xs:element name="TotTaxCommissionAmount" type="xs:decimal" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TotalsPerCurrencyGroup_REV">
+        <xs:sequence minOccurs="0">
+            <xs:element name="TotalsPerCurrency" type="Totals_REV" minOccurs="0" />
+        </xs:sequence>
+        <xs:attribute name="Currency" type="xs:string" />
+    </xs:complexType>
+    <xs:complexType name="ReportingInformation_REV">
+        <xs:annotation>
+            <xs:documentation>Information provided at time of confirmation of the document. This group contains the data taken for the HOT, CAT or
+            sales report confirmation</xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="0">
+            <xs:element name="ReportingInformationSource" type="xs:string" minOccurs="0" />
+            <xs:element name="CurrencyOfPayment" type="xs:string" minOccurs="0" />
+            <xs:element name="BSPIDorBankCode" type="xs:string" minOccurs="0" />
+            <xs:element name="CountryCode" type="xs:string" minOccurs="0" />
+            <xs:element name="BillingPeriod" type="xs:date" minOccurs="0" />
+            <xs:element name="ReportingPeriod" type="xs:date" minOccurs="0" />
+            <xs:element name="CycleNumber" type="xs:string" minOccurs="0" />
+            <xs:element name="SalesReportID" type="xs:string" minOccurs="0" />
+            <xs:element name="SalesReportOfficeID" type="xs:string" minOccurs="0" />
+            <xs:element name="ProcessingDate" type="xs:date" minOccurs="0" />
+            <xs:element name="ProcessingTime" type="xs:time" minOccurs="0" />
+            <xs:element name="FileSequenceNumber" type="xs:string" minOccurs="0" />
+            <xs:element name="DynamicRunId" type="xs:string" minOccurs="0" />
+            <xs:element name="DataStatus" type="xs:string" minOccurs="0" />
+            <xs:element name="RRC" type="xs:string" minOccurs="0" />
+            <xs:element name="ReportingWeekNumber" type="xs:integer" minOccurs="0" />
+            <xs:element name="IsPendingManualValidation" type="xs:string" default="N" minOccurs="0" />
+            <xs:element name="ReportingMonthNumber" type="xs:integer" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+	<xs:complexType name="GSTBusinessInformation_REV">
+		<xs:annotation>
+            <xs:documentation>This data group is stored at document level. It contains data related to the Indian Goods and Services Tax, for business the Indian government need some information about the buyer of the document. These data are useful is case of Issuance, Exchange and Display of both tickets and EMDs. The information is filled by the operators, and used to fill this GST Business Information field.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="0">
+            <xs:element name="GSTNumber" type="xs:string" minOccurs="0" />
+			<xs:element name="CountryOwning" type="xs:string" minOccurs="0" />
+			<xs:element name="CompanyName" type="xs:string" minOccurs="0" />
+			<xs:element name="FirstBusinessAddress" type="xs:string" minOccurs="0" />
+			<xs:element name="SecondBusinessAddress" type="xs:string" minOccurs="0" />
+			<xs:element name="BusinessAddressCity" type="xs:string" minOccurs="0" />
+			<xs:element name="BusinessAddressState" type="xs:string" minOccurs="0" />
+			<xs:element name="PostalCode" type="xs:string" minOccurs="0" />
+			<xs:element name="FirstPhoneNumber" type="xs:string" minOccurs="0" />
+			<xs:element name="SecondPhoneNumber" type="xs:string" minOccurs="0" />
+			<xs:element name="BusinessEmailAddress" type="xs:string" minOccurs="0" />
+        </xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PatchedCoupons_REV">
+		<xs:annotation>
+            <xs:documentation>This attribute provides information about the module originator of the patching (PRR: proration / TAX: tax).</xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="0">
+            <xs:element name="ConjunctiveTicketNumber" type="xs:string" minOccurs="0" />
+			<xs:element name="ConjunctiveCouponNumber" type="xs:integer" minOccurs="0" />
+			<xs:element name="CurrentCouponStatus" type="xs:string" minOccurs="0" />
+			<xs:element name="IsDiverted" type="xs:string" minOccurs="0" />
+			<xs:element name="IsUsedForExchange" type="xs:string" minOccurs="0" />
+			<xs:element name="IsUsedForDiversion" type="xs:string" minOccurs="0" />
+			<xs:element name="Source" type="xs:string" minOccurs="0" />
+        </xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FareCalculationNonProratedAmount_REV">
+        <xs:annotation>
+            <xs:documentation>This data group is stored at document level. It contains, if applicable, the amounts present in the Fare Calculation line but not prorated (like the 'PLUS' or 'LESS' amount)</xs:documentation>
+        </xs:annotation>
+			<xs:sequence minOccurs="0">
+				<xs:element name="AccountableEntity" type="AccountableEntity_REV" minOccurs="0" />
+			</xs:sequence>
+			<xs:attribute name="SubType" type="xs:string" />
+    </xs:complexType>
+    <xs:complexType name="InterlineInformation_REV">
+        <xs:annotation>
+            <xs:documentation>Information related to Interline at coupon level</xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="0">
+            <xs:element name="InterlineMemo" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="MemoType" type="xs:string" minOccurs="0" />
+                        <xs:element name="MemoNumber" type="xs:string" minOccurs="0" />
+                        <xs:element name="RejectionStage" type="xs:integer" minOccurs="0" />
+                        <xs:element name="ReasonCode" type="xs:string" minOccurs="0" />
+                        <xs:element name="NetRejectAmount" minOccurs="0">
+                            <xs:complexType>
+                                <xs:attributeGroup ref="CurrencyAmountGroup_REV" />
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="From" type="xs:string" minOccurs="0" />
+                        <xs:element name="To" type="xs:string" minOccurs="0" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+			<xs:element name="InterlineCorrespondence" type="InterlineCorrespondence_REV" minOccurs="0" />
+            <xs:element name="InvoiceNumber" type="xs:string" minOccurs="0" />
+            <xs:element name="BillingPeriod" type="BillingPeriod_REV" minOccurs="0" />
+            <xs:element name="AirlineOwnUse" type="xs:string" minOccurs="0" />
+            <xs:element name="BillingDate" type="xs:date" minOccurs="0" />
+            <xs:element name="BillingLevel" type="xs:string" minOccurs="0" />
+            <xs:element name="BillingStatus" type="xs:string" minOccurs="0" />
+            <xs:element name="SourceCode" type="xs:string" minOccurs="0" />
+            <xs:element name="NextReplyDeadline" type="xs:date" minOccurs="0" />
+            <xs:element name="ISIDECFileName" type="xs:string" minOccurs="0" />
+            <xs:element name="Reference1" type="xs:string" minOccurs="0" />
+            <xs:element name="Reference2" type="xs:string" minOccurs="0" />
+            <xs:element name="Reference3" type="xs:string" minOccurs="0" />
+            <xs:element name="Reference4" type="xs:string" minOccurs="0" />
+            <xs:element name="Reference5" type="xs:string" minOccurs="0" />
+			<xs:element name="CorrespondenceThirdRejectionDate" type="xs:date" minOccurs="0" />
+			<xs:element name="MMRDone" type="xs:string" minOccurs="0" />
+			<xs:element name="CheckSupplementaryBM" type="xs:string" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="SegmentInfo_REV">
+        <xs:annotation>
+            <xs:documentation>Information Related to a Flight Segment</xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="0">
+            <xs:element name="ClassDetails" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="BookingClass" type="xs:string" minOccurs="0" />
+                        <xs:element name="OperatingCabinClass" type="xs:string" minOccurs="0" />
+                        <xs:element name="MarketingCabinClass" type="xs:string" minOccurs="0" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="CompanyDetails" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="MarketingCarrier" type="xs:string" minOccurs="0" />
+                        <xs:element name="OperatingCarrier" type="xs:string" minOccurs="0" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="FlightIdentification" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                        <xs:element name="OperatingFlightNumber" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence minOccurs="0">
+                                    <xs:element name="FlightNumber" type="xs:string" minOccurs="0" />
+                                    <xs:element name="operationalSuffix" type="xs:string" minOccurs="0" />
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="MarketingFlightNumber" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence minOccurs="0">
+                                    <xs:element name="FlightNumber" type="xs:string" minOccurs="0" />
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="FullFlightInformation" minOccurs="0">
+                <xs:complexType>
+					<xs:sequence minOccurs="0">
+						<xs:element name="FullFlightLegs" minOccurs="0">
+							<xs:complexType>
+                                <xs:sequence minOccurs="0">
+                                    <xs:element name="FullFlightLeg" type="FullFlightLeg_REV" minOccurs="0" maxOccurs="unbounded" />
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+					</xs:sequence>
+                    <xs:attribute name="FlightDepartureDateTime" type="xs:dateTime" />
+                    <xs:attribute name="FlightDepartureAirportCode" type="xs:string" />
+                    <xs:attribute name="FlightArrivalDateTime" type="xs:dateTime" />
+                    <xs:attribute name="FlightArrivalAirportCode" type="xs:string" />
+                    <xs:attribute name="ActualFlightDepartureDatetime" type="xs:dateTime" />
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attributeGroup ref="OriginDestinationGroup_REV" />
+        <xs:attribute name="FlightDate" type="xs:dateTime" use="optional" />
+        <xs:attribute name="DepartureDate" type="xs:dateTime" use="optional" />
+        <xs:attribute name="ArrivalDate" type="xs:dateTime" use="optional" />
+        <xs:attribute name="StopoverIndicator" type="xs:string" use="optional" />
+        <xs:attribute name="InvoluntaryIndicator" type="xs:string" use="optional" />
+        <xs:attribute name="DirectionIndicator" type="xs:string" use="optional" />
+        <xs:attribute name="AirlineAlliance" type="xs:string" use="optional" />
+        <xs:attribute name="FlightBookingStatus" type="xs:string" use="optional" />
+        <xs:attribute name="RouteCode" type="xs:string" />
+        <xs:attribute name="OperatingFranchiseeName" type="xs:string" />
+        <xs:attribute name="CodeshareType" type="xs:string" />
+        <xs:attribute name="EquipmentCode" type="xs:string" />
+        <xs:attribute name="ChangeOfGaugeFlightIndicator" type="xs:string" use="optional"/>
+    </xs:complexType>
+	<xs:complexType name="FullFlightLeg_REV">
+        <xs:annotation>
+            <xs:documentation>Leg information</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="AircraftType" type="xs:string" use="optional" />
+        <xs:attribute name="AircraftRegistrationReference" type="xs:string" use="optional" />
+    </xs:complexType>
+    <xs:complexType name="TaxJustification_REV">
+        <xs:annotation>
+            <xs:documentation>Tax Matching or exemption reasons</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="Category" type="xs:string" />
+        <xs:attribute name="SubCategory" type="xs:string" />
+        <xs:attribute name="SubCategoryValue" type="xs:string" />
+        <xs:attribute name="JustificationNumber" type="xs:string" />
+    </xs:complexType>
+    <xs:complexType name="AirlineTaxSPA_REV">
+	<xs:annotation>
+		<xs:documentation>Tax ABR rule information used for tax amount computation</xs:documentation>
+	</xs:annotation>
+	<xs:sequence minOccurs="0" >
+		<xs:element name="Amount" type="Amount_REV" minOccurs="0" maxOccurs="unbounded"/>
+	</xs:sequence>
+	<xs:attribute name="ApportioningMethod" type="xs:string" />
+	<xs:attribute name="AgreementID" type="xs:string" />
+	<xs:attribute name="ABRID" type="xs:string" />
+    </xs:complexType>
+</xs:schema>
